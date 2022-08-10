@@ -27,7 +27,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  
+
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -40,15 +40,12 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 
 const objetoCorrect = async (param) => {
   const { results } = await fetchProducts(param);
-  console.log(results);
-  results.forEach(({id, title,thumbnail})=> {
-    const itens = createProductItemElement({sku:id, name:title, image:thumbnail});
+  results.forEach(({ id, title, thumbnail }) => {
+    const itens = createProductItemElement({ sku: id, name: title, image: thumbnail });
     itensAmostra.appendChild(itens);
   });
-  
-  return itens;
 };
 
-window.onload = async () => { 
-  await objetoCorrect('computador')
+window.onload = async () => {
+  await objetoCorrect('computador');
 };
