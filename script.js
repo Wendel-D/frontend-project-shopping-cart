@@ -9,6 +9,32 @@ const sum = () => {
   precos.innerText = (total * 100) / 100;
 };
 
+const cartItemClickListener = (event, skul) => {
+  event.target.remove();
+  const itemRemove = saveItens.findIndex((index) => index.sku === skul);
+  saveItens.splice(itemRemove, 1);
+  saveCartItems(saveItens);
+  sum();
+};
+
+const createCartItemElement = ({ sku, name, salePrice }) => {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', (event) => {
+    cartItemClickListener(event, sku);
+  });
+  return li;
+};
+
+const loadCart = (arr) => {
+  arr.forEach((item) => {
+    const { id, title, price } = item;
+    const itensLoad = createCartItemElement({ sku: id, name: title, salePrice: price });
+    itensCarrinho.appendChild(itensLoad);
+  });
+};
+
 esvasiarCart.addEventListener('click', () => {
   saveItens = [];
   itensCarrinho.innerHTML = '';
@@ -29,24 +55,6 @@ const createCustomElement = (element, className, innerText) => {
   e.className = className;
   e.innerText = innerText;
   return e;
-};
-
-const cartItemClickListener = (event, skul) => {
-  event.target.remove();
-  const itemRemove = saveItens.findIndex((index) => index.sku === skul);
-  saveItens.splice(itemRemove, 1);
-  saveCartItems(saveItens);
-  sum();
-};
-
-const createCartItemElement = ({ sku, name, salePrice }) => {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', (event) => {
-    cartItemClickListener(event, sku);
-  });
-  return li;
 };
 
 const createProductItemElement = ({ sku, name, image }) => {
