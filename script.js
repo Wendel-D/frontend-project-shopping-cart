@@ -1,6 +1,14 @@
 const itensAmostra = document.querySelector('.items');
 const itensCarrinho = document.querySelector('.cart__items');
+const esvasiarCart = document.querySelector('.empty-cart')
 let saveItens = [];
+
+esvasiarCart.addEventListener('click', () => {
+  saveItens = [];
+  itensCarrinho.innerHTML = '';
+  saveCartItems(saveItens);
+  loadCart(saveItens);
+})
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -16,15 +24,20 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const cartItemClickListener = (event) => {
+const cartItemClickListener = (event, skul) => {
   event.target.remove();
+  const itemRemove = saveItens.findIndex((index) => index.sku === skul);
+  saveItens.splice(itemRemove, 1);
+  saveCartItems(saveItens);
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', (event) =>{
+    cartItemClickListener(event, sku);
+  });
   return li;
 };
 
