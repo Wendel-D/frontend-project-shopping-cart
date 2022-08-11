@@ -41,7 +41,6 @@ const createProductItemElement = ({ sku, name, image }) => {
     const itens = createCartItemElement({ sku: id, name: title, salePrice: price });
     itensCarrinho.appendChild(itens);
     saveItens.push(results);
-    console.log(saveItens);
     saveCartItems(saveItens);
   });
   section.appendChild(btn);
@@ -54,7 +53,6 @@ const loadCart = (arr) => {
     const itensLoad = createCartItemElement({ sku: id, name: title, salePrice: price });
     itensCarrinho.appendChild(itensLoad);
   });
-  console.log(arr);
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
@@ -69,6 +67,6 @@ const objetoCorrect = async (param) => {
 
 window.onload = async () => {
   await objetoCorrect('computador');
-  saveItens = JSON.parse(localStorage.getItem('cartItems')) || [];
+  saveItens = JSON.parse(getSavedCartItems()) || [];
   loadCart(saveItens);
 };
