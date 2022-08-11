@@ -6,8 +6,8 @@ let saveItens = [];
 
 const sum = () => {
   const total = saveItens.reduce((acc, current) => acc + current.price, 0);
-  precos.innerText = (total *100)/100;
-}
+  precos.innerText = (total * 100) / 100;
+};
 
 esvasiarCart.addEventListener('click', () => {
   saveItens = [];
@@ -15,7 +15,7 @@ esvasiarCart.addEventListener('click', () => {
   saveCartItems(saveItens);
   loadCart(saveItens);
   sum();
-})
+});
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -43,7 +43,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', (event) =>{
+  li.addEventListener('click', (event) => {
     cartItemClickListener(event, sku);
   });
   return li;
@@ -69,18 +69,13 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
-const loadCart = (arr) => {
-  arr.forEach((item) => {
-    const { id, title, price } = item;
-    const itensLoad = createCartItemElement({ sku: id, name: title, salePrice: price });
-    itensCarrinho.appendChild(itensLoad);
-  });
-};
-
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const objetoCorrect = async (param) => {
+  const loading = createCustomElement('span', 'loading', 'carregando...');
+  itensAmostra.appendChild(loading);
   const { results } = await fetchProducts(param);
+  itensAmostra.removeChild(loading);
   results.forEach(({ id, title, thumbnail }) => {
     const itens = createProductItemElement({ sku: id, name: title, image: thumbnail });
     itensAmostra.appendChild(itens);
