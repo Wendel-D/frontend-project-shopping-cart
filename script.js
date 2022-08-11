@@ -10,8 +10,9 @@ const sum = () => {
 };
 
 const cartItemClickListener = (event, skul) => {
-  event.target.remove();
-  const itemRemove = saveItens.findIndex((index) => index.sku === skul);
+  itensCarrinho.removeChild(event.target);
+  // event.target.remove();
+  const itemRemove = saveItens.findIndex((index) => index.id === skul);
   saveItens.splice(itemRemove, 1);
   saveCartItems(saveItens);
   sum();
