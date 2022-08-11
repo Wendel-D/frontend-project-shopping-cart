@@ -42,7 +42,7 @@ const createProductItemElement = ({ sku, name, image }) => {
     itensCarrinho.appendChild(itens);
     saveItens.push(results);
     console.log(saveItens);
-    saveCartItems(saveItens)
+    saveCartItems(saveItens);
   });
   section.appendChild(btn);
   return section;
@@ -53,9 +53,9 @@ const loadCart = (arr) => {
     const { id, title, price } = item;
     const itensLoad = createCartItemElement({ sku: id, name: title, salePrice: price });
     itensCarrinho.appendChild(itensLoad);
-  })
+  });
   console.log(arr);
-}
+};
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
