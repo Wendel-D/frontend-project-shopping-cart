@@ -1,13 +1,20 @@
 const itensAmostra = document.querySelector('.items');
 const itensCarrinho = document.querySelector('.cart__items');
-const esvasiarCart = document.querySelector('.empty-cart')
+const esvasiarCart = document.querySelector('.empty-cart');
+const precos = document.querySelector('.total-price');
 let saveItens = [];
+
+const sum = () => {
+  const total = saveItens.reduce((acc, current) => acc + current.price, 0);
+  precos.innerText = (total *100)/100;
+}
 
 esvasiarCart.addEventListener('click', () => {
   saveItens = [];
   itensCarrinho.innerHTML = '';
   saveCartItems(saveItens);
   loadCart(saveItens);
+  sum();
 })
 
 const createProductImageElement = (imageSource) => {
@@ -29,6 +36,7 @@ const cartItemClickListener = (event, skul) => {
   const itemRemove = saveItens.findIndex((index) => index.sku === skul);
   saveItens.splice(itemRemove, 1);
   saveCartItems(saveItens);
+  sum();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -55,6 +63,7 @@ const createProductItemElement = ({ sku, name, image }) => {
     itensCarrinho.appendChild(itens);
     saveItens.push(results);
     saveCartItems(saveItens);
+    sum();
   });
   section.appendChild(btn);
   return section;
